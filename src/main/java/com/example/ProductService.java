@@ -16,19 +16,17 @@ public class ProductService {
         return repo.save(products);
     }
 
-    public Products update (Products products) throws UserNotFoundException{
-        if (!repo.existsById(products.getId())){
-            throw new UserNotFoundException("User not Found ") ;
+    public Products update (Products products , Integer id ) throws UserNotFoundException{
+        if (repo.findById(id).isPresent()){
+            return repo.save(products);
+        }else{
+            throw new UserNotFoundException("User Not Found") ;
         }
-        return repo.save(products);
+
     }
 
     public Products get (Integer id) throws UserNotFoundException{
-        Optional<Products> result = repo.findById(id);
-        if (result.isPresent()) {
-            return result.get() ;
-        }
-        throw new UserNotFoundException("User Not Found");
+        return repo.findById(id).orElseThrow(()->new UserNotFoundException("User Not Found"));
     }
 
     public List<Products> getAllProducts (){
