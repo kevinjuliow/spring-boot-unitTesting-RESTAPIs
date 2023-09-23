@@ -6,7 +6,6 @@ This repository demonstrates how to perform unit testing for REST APIs in a Spri
 
 - [Setup and Configuration](#setup-and-configuration)
 - [Running the Tests](#running-the-tests)
-- [References](#references)
 
 ## Setup and Configuration
 
@@ -14,11 +13,11 @@ Before running the tests, make sure you have the necessary tools and dependencie
 
 ### IntelliJ IDEA Configuration
 
-- Configure testing libraries in IntelliJ IDEA by following this [guide](https://www.jetbrains.com/help/idea/configuring-testing-libraries.html).
+- Configure testing libraries in IntelliJ IDEA [guide](https://www.jetbrains.com/help/idea/configuring-testing-libraries.html).
 
 ### JUnit
 
-JUnit is a vital testing framework for Java applications. Learn more about JUnit [here](https://junit.org/junit5/docs/current/user-guide/).
+JUnit testing framework for Java applications. Learn more about JUnit [here](https://junit.org/junit5/docs/current/user-guide/).
 
 ### Mockito
 
@@ -30,4 +29,4 @@ If you're new to Spring Boot Data JPA, you can get an introduction [here](http:/
 
 ## Running the Tests
 
-Once your development environment is properly configured, you can run the unit tests for your Spring Boot REST APIs. Use the following commands:
+Once your development environment is properly configured, you can run the unit tests for your Spring Boot REST APIs.
