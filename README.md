@@ -1,9 +1,33 @@
-# spring-boot-unitTesting-RESTAPIs
-Unit Testing with Spring, JUnit and Mockito
+# Spring Boot Unit Testing with Spring, JUnit, and Mockito
 
-# References
-Intellij : <br/> - [https://www.jetbrains.com/help/idea/configuring-testing-libraries.html](https://www.jetbrains.com/help/idea/configuring-testing-libraries.html)
-- [https://blog.jetbrains.com/idea/2016/08/using-junit-5-in-intellij-idea/](https://blog.jetbrains.com/idea/2016/08/using-junit-5-in-intellij-idea/)<br/>
-Introduction to JPA and Hibernate using Spring Boot Data Jpa :<br/> - [http://www.springboottutorial.com/introduction-to-jpa-with-spring-boot-data-jpa](http://www.springboottutorial.com/introduction-to-jpa-with-spring-boot-data-jpa)<br/>
-JUnit  :<br/>- [https://junit.org/junit5/docs/current/user-guide/](https://junit.org/junit5/docs/current/user-guide/) <br/>
-Mockito :<br/>- [https://github.com/mockito/mockito/wiki/FAQ](https://github.com/mockito/mockito/wiki/FAQ) <br/>
+This repository demonstrates how to perform unit testing for REST APIs in a Spring Boot application using Spring, JUnit, and Mockito.
+
+## Table of Contents
+
+- [Setup and Configuration](#setup-and-configuration)
+- [Running the Tests](#running-the-tests)
+- [References](#references)
+
+## Setup and Configuration
+
+Before running the tests, make sure you have the necessary tools and dependencies set up:
+
+### IntelliJ IDEA Configuration
+
+- Configure testing libraries in IntelliJ IDEA by following this [guide](https://www.jetbrains.com/help/idea/configuring-testing-libraries.html).
+
+### JUnit
+
+JUnit is a vital testing framework for Java applications. Learn more about JUnit [here](https://junit.org/junit5/docs/current/user-guide/).
+
+### Mockito
+
+Mockito is a powerful mocking framework for Java. Find answers to common questions about Mockito [here](https://github.com/mockito/mockito/wiki/FAQ).
+
+### Spring Boot Data JPA
+
+If you're new to Spring Boot Data JPA, you can get an introduction [here](http://www.springboottutorial.com/introduction-to-jpa-with-spring-boot-data-jpa).
+
+## Running the Tests
+
+Once your development environment is properly configured, you can run the unit tests for your Spring Boot REST APIs. Use the following commands:
