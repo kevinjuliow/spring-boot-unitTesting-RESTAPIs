@@ -19,10 +19,8 @@ public class ProductService {
     public Products update (Products products , Integer id ) throws UserNotFoundException{
         if (repo.findById(id).isPresent()){
             return repo.save(products);
-        }else{
-            throw new UserNotFoundException("User Not Found") ;
         }
-
+            throw new UserNotFoundException("User Not Found") ;
     }
 
     public Products get (Integer id) throws UserNotFoundException{
@@ -32,7 +30,7 @@ public class ProductService {
     public List<Products> getAllProducts (){
         return repo.findAll();
     }
-    public void delete (Integer id) throws UserNotFoundException{
+    public Products delete (Integer id) throws UserNotFoundException{
         Optional<Products> result = repo.findById(id);
         if (result.isPresent()) {
             repo.deleteById(id);

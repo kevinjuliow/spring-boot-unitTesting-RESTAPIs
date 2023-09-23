@@ -48,6 +48,7 @@ public class ProductsControllerTests {
         Mockito.when(service.add(products)).thenReturn(products);
         mockMvc.perform(MockMvcRequestBuilders.post(END_POINT_PATH)
                         .contentType("application/json").content(requestBody))
+                .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
                 .andExpect(MockMvcResultMatchers.status().isCreated())
                 .andExpect(MockMvcResultMatchers.header().string("Location" , ("/api/v1/products/1")))
                 .andDo(MockMvcResultHandlers.print());
@@ -72,6 +73,7 @@ public class ProductsControllerTests {
         Mockito.when(service.get(products.getId())).thenReturn(products);
 
         mockMvc.perform(MockMvcRequestBuilders.get(END_POINT_PATH + "/" + searchId).contentType("application/json"))
+                .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
                 .andExpect(MockMvcResultMatchers.status().isOk()).andDo(MockMvcResultHandlers.print());
     }
 
@@ -84,30 +86,80 @@ public class ProductsControllerTests {
 
         Mockito.when(service.getAllProducts()).thenReturn(products);
         mockMvc.perform(MockMvcRequestBuilders.get(END_POINT_PATH).contentType("application/json"))
+                .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
                 .andExpect(MockMvcResultMatchers.status().isOk()).andDo(MockMvcResultHandlers.print());
+    }
+    @Test
+    public void testGetAllProductsShouldReturn204NoContent () throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get(END_POINT_PATH).contentType("application/json"))
+                .andExpect(MockMvcResultMatchers.status().isNoContent()).andDo(MockMvcResultHandlers.print());
     }
 
     @Test
     public void testUpdateProductShouldReturn404NotFound () throws Exception{
-        Integer searchId = 123 ;
-        Products products = new Products(1, "Samsung A50s" , 499);
+        Products existProducts = new Products(1 ,"Samsung A50" , 499);
+        Integer searchId = 2 ;
+        Products products = new Products("Samsung A50s" , 499);
         String requestBody = objectMapper.writeValueAsString(products);
+        String requestBodyExist = objectMapper.writeValueAsString(existProducts);
 
-        mockMvc.perform(MockMvcRequestBuilders.put(END_POINT_PATH + "/" + searchId).contentType("application/json")
-                        .content(requestBody))
-                .andExpect(MockMvcResultMatchers.status().isNotFound())
+        Mockito.when(service.add(existProducts)).thenReturn(existProducts);
+        Mockito.when(service.update(products , searchId)).thenReturn(products);
+
+        mockMvc.perform(MockMvcRequestBuilders.post(END_POINT_PATH).contentType("application/json").content(requestBodyExist));
+        mockMvc.perform(MockMvcRequestBuilders.put(END_POINT_PATH +"/"+ searchId).contentType("application/json").content(requestBody))
+                .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
                 .andDo(MockMvcResultHandlers.print());
     }
     @Test
     public void testUpdateProductShouldReturn200Ok () throws Exception{
-        Integer searchId = 123 ;
+        Products existProducts = new Products(1 ,"Samsung A50" , 499);
+        Integer searchId = 1 ;
         Products products = new Products("Samsung A50s" , 499);
         String requestBody = objectMapper.writeValueAsString(products);
+        String requestBodyExist = objectMapper.writeValueAsString(existProducts);
 
+        Mockito.when(service.add(existProducts)).thenReturn(existProducts);
         Mockito.when(service.update(products , searchId)).thenReturn(products);
-        mockMvc.perform(MockMvcRequestBuilders.put(END_POINT_PATH + "/" + searchId).contentType("application/json")
-                        .content(requestBody))
+
+        mockMvc.perform(MockMvcRequestBuilders.post(END_POINT_PATH).contentType("application/json").content(requestBodyExist));
+        mockMvc.perform(MockMvcRequestBuilders.put(END_POINT_PATH +"/"+ searchId).contentType("application/json").content(requestBody))
+                .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
+                .andDo(MockMvcResultHandlers.print());
+    }
+
+    @Test
+    public void testDeleteProductShouldReturn204NoContent() throws Exception{
+        Products existProducts = new Products(1 ,"Samsung A50" , 499);
+
+        Integer destinationId = 1 ;
+
+        String requestBodyExist = objectMapper.writeValueAsString(existProducts);
+
+        Mockito.when(service.add(existProducts)).thenReturn(existProducts);
+        Mockito.when(service.delete(destinationId)).thenReturn(existProducts);
+        mockMvc.perform(MockMvcRequestBuilders.post(END_POINT_PATH).contentType("application/json").content(requestBodyExist));
+        mockMvc.perform(MockMvcRequestBuilders.delete(END_POINT_PATH + "/" +destinationId)
+                .contentType("application/json"))
+                .andExpect(MockMvcResultMatchers.status().isNoContent())
+                .andDo(MockMvcResultHandlers.print());
+    }
+    @Test
+    public void testDeleteProductShouldReturn404NotFound() throws Exception{
+        Products existProducts = new Products(1 ,"Samsung A50" , 499);
+
+        Integer destinationId = 2 ;
+
+        String requestBodyExist = objectMapper.writeValueAsString(existProducts);
+
+        Mockito.when(service.add(existProducts)).thenReturn(existProducts);
+        Mockito.when(service.delete(destinationId)).thenThrow(UserNotFoundException.class);
+        mockMvc.perform(MockMvcRequestBuilders.post(END_POINT_PATH).contentType("application/json").content(requestBodyExist));
+        mockMvc.perform(MockMvcRequestBuilders.delete(END_POINT_PATH + "/" +destinationId)
+                .contentType("application/json"))
+                .andExpect(MockMvcResultMatchers.status().isNotFound())
                 .andDo(MockMvcResultHandlers.print());
     }
 }

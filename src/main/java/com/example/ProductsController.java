@@ -48,7 +48,8 @@ public class ProductsController {
     @GetMapping
     public ResponseEntity<?> getAllProducts (){
         List<Products> products = productService.getAllProducts();
-        return ResponseEntity.ok(products);
+        return products.isEmpty()? ResponseEntity.noContent().build() :  ResponseEntity.ok().body(products);
+
     }
 
     @PutMapping("/{id}")
@@ -56,6 +57,17 @@ public class ProductsController {
         try{
             productService.update(products , id);
             return ResponseEntity.ok(entity2Dto(products));
+        }
+        catch (UserNotFoundException err){
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteProduct (@PathVariable Integer id){
+        try{
+            productService.delete(id);
+            return ResponseEntity.noContent().build();
         }
         catch (UserNotFoundException err){
             return ResponseEntity.notFound().build();
